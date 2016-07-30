@@ -1,12 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
-Name=Thunderbird
+Name=Thunderbird (Flatpak)
 GenericName=Email
 Comment=Send and Receive Email
 Exec=thunderbird %u
 Terminal=false
-Icon=thunderbird
+Icon=org.mozilla.Thunderbird
 Categories=Network;Email;
 StartupNotify=false
 MimeType=message/rfc822;x-scheme-handler/mailto;
