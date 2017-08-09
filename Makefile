@@ -3,7 +3,7 @@ include Makefile.config
 json := org.mozilla.Thunderbird.json
 app := Thunderbird
 
-all: test prune
+all: test prune install-repo
 
 test: repo $(json)
 	flatpak-builder --force-clean --repo=repo --ccache --require-changes $(app) $(json)
