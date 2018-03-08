@@ -21,8 +21,8 @@ prune:
 	flatpak build-update-repo --prune --prune-depth=20 repo
 
 install-repo:
-	flatpak --user remote-add --if-not-exists --no-gpg-verify nightly-thunderbird ./repo
-	flatpak --user -v install nightly-thunderbird org.mozilla.Thunderbird || true
+	flatpak --user remote-add --if-not-exists --no-gpg-verify local-thunderbird ./repo
+	flatpak --user -v install local-thunderbird org.mozilla.Thunderbird || true
 
 repo:
 	ostree init --mode=archive-z2 --repo=repo
