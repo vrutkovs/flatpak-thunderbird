@@ -1,40 +1,17 @@
-include Makefile.config
+all: prepare-repo install-deps build update-repo
 
-json := org.mozilla.Thunderbird.json
-app := Thunderbird
+prepare-repo:
+	[[ -d repo ]] || ostree init --mode=archive-z2 --repo=repo
+	[[ -d repo/refs/remotes ]] || mkdir -p repo/refs/remotes && touch repo/refs/remotes/.gitkeep
 
-all: test prune install-repo
+install-deps:
+	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	flatpak --user install flathub org.gnome.Platform/x86_64/3.28 org.gnome.Sdk/x86_64/3.28 || true
 
-test: repo $(json)
-	flatpak-builder --force-clean --repo=repo --ccache --require-changes $(app) $(json)
-	flatpak build-update-repo repo
+build:
+	flatpak-builder --force-clean --ccache --require-changes --repo=repo \
+		--subject="Nightly build of Thunderbird, `date`" \
+		${EXPORT_ARGS} app org.mozilla.Thunderbird.json
 
-release: release-repo $(json)
-	if [ "x${RELEASE_GPG_KEY}" == "x" ]; then echo Must set RELEASE_GPG_KEY in Makefile.config, try \'make gpg-key\'; exit 1; fi
-	flatpak-builder --force-clean --repo=release-repo  --ccache --gpg-homedir=gpg --gpg-sign=${RELEASE_GPG_KEY} $(app) $(json)
-	flatpak build-update-repo --generate-static-deltas --gpg-homedir=gpg --gpg-sign=${RELEASE_GPG_KEY} release-repo
-
-clean:
-	rm -rf $(app)/*
-
-prune:
-	flatpak build-update-repo --prune --prune-depth=20 repo
-
-install-repo:
-	flatpak --user remote-add --if-not-exists --no-gpg-verify local-thunderbird ./repo
-	flatpak --user -v install local-thunderbird org.mozilla.Thunderbird || true
-
-repo:
-	ostree init --mode=archive-z2 --repo=repo
-
-release-repo:
-	ostree init --mode=archive-z2 --repo=release-repo
-
-gpg-key:
-	if [ "x${KEY_USER}" == "x" ]; then echo Must set KEY_USER in Makefile.config; exit 1; fi
-	mkdir -p gpg
-	gpg2 --homedir gpg --quick-gen-key ${KEY_USER}
-	echo Enter the above gpg key id as RELEASE_GPG_KEY in Makefile.config
-
-$(app).flatpakref: $(app).flatpakref.in
-	sed -e 's|@URL@|${URL}|g' -e 's|@GPG@|$(shell gpg2 --homedir=gpg --export ${RELEASE_GPG_KEY} | base64 | tr -d '\n')|' $< > $@
+update-repo:
+	flatpak build-update-repo --prune --prune-depth=20 --generate-static-deltas repo

@@ -1,0 +1,8 @@
+[Flatpak Ref]
+Title=Unofficial Mozilla Thunderbird flatpak
+Name=org.mozilla.Thunderbird
+Branch=master
+Url=https://vrutkovs.github.io/thunderbird-flatpak/repo
+IsRuntime=False
+RuntimeRepo=https://flathub.org/repo/flathub.flatpakrepo
+Comment=A flatpak for Mozilla Thunderbird, using freedesktop runtime and official beta binaries
