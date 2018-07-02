@@ -15,8 +15,8 @@
     "--talk-name=org.gnome.GConf",
     "--talk-name=org.freedesktop.Notifications",
     "--talk-name=org.freedesktop.secrets",
-    "--extra-data=thunderbird.tar.bz2:0ad555e6f2b456b9167056f559381b105798dba9e1718338faf827d1097da3d7:49283300::https://ftp.mozilla.org/pub/thunderbird/releases/60.0b1/linux-x86_64/en-US/thunderbird-60.0b1.tar.bz2",
-    "--extra-data=en-US.xpi:5a34b54191f37405437613553836582ece4963ad764fcbe8883698900edfdb10:545670::https://ftp.mozilla.org/pub/thunderbird/releases/60.0b1/linux-x86_64/xpi/en-US.xpi"
+    "--extra-data=thunderbird.tar.bz2:d08068a16523e1b7f106a6f7d79557e74b39141c4fdc55993ebc663e25a43a3e:50162415::https://ftp.mozilla.org/pub/thunderbird/releases/60.0b9/linux-x86_64/en-US/thunderbird-60.0b9.tar.bz2",
+    "--extra-data=en-US.xpi:91bd7c0877bc738610bf916c6e61d56b0ed59fcfe2cc7547dbaf9806d61dbac9:546978::https://ftp.mozilla.org/pub/thunderbird/releases/60.0b9/linux-x86_64/xpi/en-US.xpi"
   ],
   "modules": [
     {
@@ -102,5 +102,8 @@
         }
       ]
     }
-  ]
+  ],
+  "build-options": {
+    "env": {}
+  }
 }
